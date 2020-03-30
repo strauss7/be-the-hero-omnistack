@@ -2,11 +2,12 @@ const connection = require('../database/connection');
 const generateUniqueId = require('../utils/generateUniqueId');
 
 module.exports = {
-    async getList(request, response) {
-        const ongs = await connection('ongs').select('*');
     
+    async getlist(request, response) {
+        const ongs = await connection('ongs').select('*');
+      
         return response.json(ongs);
-    },
+      },
 
     async create(request, response) {
         const { name, email, whatsapp, city, uf } = request.body;

@@ -10,12 +10,12 @@ import LogoImg from '../../assets/logo.png';
 import  styles from './styles';
 
 export default function Incidents() {
-    const [incidents, setIncidents] = useState([]);
-    const [total, setTotal] = useState(0);
-    const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const [incidents, setIncidents] = useState([])
+    const [total, setTotal] = useState(0)
+    const [page, setPage] = useState(1)
+    const [loading, setLoading] = useState(false)
 
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
     function navigateToDetail(incident) {
         navigation.navigate('Detail', { incident });
@@ -23,28 +23,28 @@ export default function Incidents() {
 
     async function loadIncidents() {
         if(loading) {
-            return;
+            return
         }
 
-        if (total > 0 && incidents.length == total ) {
-            return;
+        if (total > 0 && incidents.length === total ) {
+            return
         }
 
         setLoading(true);
 
-        const response = await api.get('incidents', {
-            params: { page }
-        });
+        const response = await api.get('/incidents', {
+            params: { page: page }
+        })
 
-        setIncidents([...incidents, ...response.data]);
-        setTotal(response.headers['x-total-count']);
+        setIncidents([...incidents, ...response.data])
+        setTotal(response.headers['x-total-count'])
         setPage(page + 1);
         setLoading(false);
     }
 
     useEffect(() => {
         loadIncidents();
-    }, []);
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -64,7 +64,7 @@ export default function Incidents() {
                 keyExtractor={incident => String(incident.id)}
                 showsVerticalScrollIndicator={false}
                 onEndReached={loadIncidents}
-                onEndReachedThreshold={0.2}
+                onEndReachedThreshold={ 0.2 }
                 renderItem={({ item: incident }) => (
                     <View style={styles.incident}>
                         <Text style={styles.incidentProperty}>ONG:</Text>
@@ -87,5 +87,5 @@ export default function Incidents() {
                 )} 
              />
         </View>
-    );
+    )
 }
